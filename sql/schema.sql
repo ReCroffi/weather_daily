@@ -3,5 +3,5 @@ CREATE TABLE weather_daily(
     temp_max FLOAT,
     temp_min FLOAT,
     precipitacao FLOAT,
-    velocidade_vento FLOAT
-);
+    velocidade_vento FLOAT,
+); 
