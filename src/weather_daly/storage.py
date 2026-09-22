@@ -31,3 +31,19 @@ def ingest_results(model_name, predictions, y_test, dia_test, engine) -> None:
     with engine.connect() as connection:
         connection.execute(text("INSERT INTO model_predictions (dia, modelo, valor_real, valor_previsto) VALUES (:dia, :modelo, :valor_real, :valor_previsto) ON CONFLICT (dia, modelo) DO UPDATE SET valor_real = EXCLUDED.valor_real, valor_previsto = EXCLUDED.valor_previsto"), results_dict)
         connection.commit()
+
+
+def get_latest_predictions( engine) -> list[dict]:
+    """
+    Recupera as últimas previsões do modelo do banco de dados PostgreSQL.
+    Args:
+        
+        engine: Objeto SQLAlchemy Engine para conexão com o banco de dados. """
+    with engine.connect() as connection:
+        query = text("SELECT MAX(dia) AS latest_date FROM model_predictions")
+        result = connection.execute(query).fetchone()
+        latest_date = result.latest_date if result else None 
+        query = text("SELECT * FROM model_predictions WHERE dia = :latest_date")
+        result = connection.execute(query, {"latest_date": latest_date}).fetchall()
+        predictions = [dict(row._mapping) for row in result]
+    return predictions
