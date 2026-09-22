@@ -2,8 +2,8 @@ import os
 from datetime import datetime
 
 from dotenv import load_dotenv
-from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
 from sqlalchemy import create_engine
 
@@ -14,8 +14,8 @@ from weather_daly.modeling import (
     split_train_test,
     train_and_evaluate,
 )
-from weather_daly.storage import load_to_postgres
-from weather_daly.storage import ingest_results
+from weather_daly.storage import ingest_results, load_to_postgres
+
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL) if DATABASE_URL else None
@@ -29,7 +29,7 @@ else:
     model = [("RandomForestRegressor", RandomForestRegressor()), ("LinearRegression", LinearRegression())]
     loaded_features = load_features(engine)
     cutoff_date = "2024-01-01"
-    cutoff_date = datetime.strptime(cutoff_date, "%Y-%m-%d").date()
+    cutoff_date = datetime.strptime(cutoff_date, "%Y-%m-%d").date()  # noqa: DTZ007
     X_train, X_test, y_train, y_test, dia_test = split_train_test(loaded_features, cutoff_date)
     baseline_predictions = baseline_predict(X_test)  
     mae_baseline = mean_absolute_error(y_test, baseline_predictions)

@@ -1,5 +1,6 @@
+import pandas as pd
 from sqlalchemy import text
-import pandas as pd 
+
 
 def load_to_postgres(df: pd.DataFrame, engine) -> None:
     df = df.rename(columns={"time": "dia", "temperature_2m_max": "temp_max", "temperature_2m_min": "temp_min", "precipitation_sum": "precipitacao", "windspeed_10m_max": "velocidade_vento" })
