@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Daily - App de Previsão do Tempo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Weather Daily</h1>   
+    <p>Bem-vindo ao Weather Daily, seu app de previsão do tempo!</p>
+    <p>Aqui você pode ver as previsões do tempo para os próximos dias para São Paulo/SP.</p>
+    <h2>Previsão para {{ dia_previsto }}</h2>
+
+    <table>
+        <thead>
+             <tr><th>Modelo</th><th>Previsão(temperatura maxima em °C)</th></tr>
+        </thead>
+        <tbody>
+         {% for previsao in previsoes %}
+        <tr>
+            <td>{{ previsao.modelo }}</td>
+            <td>{{ previsao.valor_previsto | round(2)}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
