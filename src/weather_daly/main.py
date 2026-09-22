@@ -24,7 +24,8 @@ if engine is None:
     print("DATABASE_URL não configurada. Defina a variável de ambiente antes de executar o pipeline.")
 else:
     # Executar o pipeline de ingestão e carregamento de dados
-    weather_data = fetch_weather_data(lat=-23.5505, lon=-46.6333, start_date="2021-01-01", end_date="2025-12-31")
+    end_date = datetime.today().strftime("%Y-%m-%d")
+    weather_data = fetch_weather_data(lat=-23.5505, lon=-46.6333, start_date="2021-01-01", end_date=end_date)
     load_to_postgres(weather_data, engine)
     model = [("RandomForestRegressor", RandomForestRegressor()), ("LinearRegression", LinearRegression())]
     loaded_features = load_features(engine)
