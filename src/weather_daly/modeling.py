@@ -37,7 +37,7 @@ def split_train_test(df, cutoff_date) -> tuple:
     X_test = test_df.drop(columns=['temp_max_dia_seguinte', 'dia'])
     y_test = test_df['temp_max_dia_seguinte']
 
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train, y_test, test_df['dia']
 
 def baseline_predict(X_test) -> np.ndarray:
     """
@@ -52,7 +52,7 @@ def baseline_predict(X_test) -> np.ndarray:
     return X_test['temp_max'].values
 
 
-def train_and_evaluate(X_train, X_test, y_train, y_test, model) -> float:
+def train_and_evaluate(X_train, X_test, y_train, y_test, model) -> tuple[float, np.ndarray]:
     """
     Treina um modelo de regressão linear e avalia seu desempenho.
 
@@ -61,9 +61,10 @@ def train_and_evaluate(X_train, X_test, y_train, y_test, model) -> float:
         X_test (pd.DataFrame): Conjunto de teste contendo as features.
         y_train (pd.Series): Valores reais do conjunto de treino.
         y_test (pd.Series): Valores reais do conjunto de teste.
+        model (sklearn.base.BaseEstimator): Modelo de regressão a ser treinado.
 
     Returns:
-        float: Métricas de avaliação do modelo (MAE).
+        tuple: Tupla contendo a métrica de avaliação (MAE) e as previsões do modelo.
     """
 
 
@@ -74,4 +75,4 @@ def train_and_evaluate(X_train, X_test, y_train, y_test, model) -> float:
     
     mae = mean_absolute_error(y_test, predictions)
 
-    return mae
+    return mae, predictions         
