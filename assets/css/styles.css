@@ -1,0 +1,110 @@
+:root {
+    --color-bg: #eef3f8;
+    --color-surface: #ffffff;
+    --color-primary: #2f6fed;
+    --color-primary-dark: #1e4fb8;
+    --color-text: #1f2937;
+    --color-text-muted: #6b7280;
+    --color-border: #e5e7eb;
+    --radius: 12px;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 2.5rem 1.5rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #dbe9fb 0%, var(--color-bg) 320px);
+    color: var(--color-text);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+}
+
+h1 {
+    margin: 0 0 0.25rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+}
+
+h1::before {
+    content: "☀️ ";
+}
+
+p {
+    max-width: 560px;
+    text-align: center;
+    color: var(--color-text-muted);
+    margin: 0.25rem 0;
+}
+
+h2 {
+    margin: 2rem 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    max-width: 560px;
+    border-collapse: collapse;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+thead th {
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.9rem;
+}
+
+tbody td {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.95rem;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+tbody tr:hover {
+    background: #eaf1fd;
+}
+
+tbody td:last-child {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    thead th,
+    tbody td {
+        padding: 0.6rem 0.85rem;
+        font-size: 0.85rem;
+    }
+}

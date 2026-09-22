@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 from sklearn.ensemble import RandomForestRegressor
@@ -33,6 +33,7 @@ else:
     X_train, X_test, y_train, y_test, dia_test = split_train_test(loaded_features, cutoff_date)
     baseline_predictions = baseline_predict(X_test)  
     mae_baseline = mean_absolute_error(y_test, baseline_predictions)
+    dia_test = dia_test + timedelta(days=1) 
     resultados = {}   
     for model_name, model_instance in model:
         mae, predictions = train_and_evaluate(X_train, X_test, y_train, y_test, model_instance)
