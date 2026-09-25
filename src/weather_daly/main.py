@@ -27,7 +27,7 @@ else:
     end_date = datetime.today().strftime("%Y-%m-%d")
     weather_data = fetch_weather_data(lat=-23.5505, lon=-46.6333, start_date="2021-01-01", end_date=end_date)
     load_to_postgres(weather_data, engine)
-    model = [("RandomForestRegressor", RandomForestRegressor()), ("LinearRegression", LinearRegression())]
+    model = [("RandomForestRegressor", RandomForestRegressor(random_state=42)), ("LinearRegression", LinearRegression())]
     loaded_features = load_features(engine)
     cutoff_date = "2024-01-01"
     cutoff_date = datetime.strptime(cutoff_date, "%Y-%m-%d").date()  # noqa: DTZ007

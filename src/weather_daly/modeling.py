@@ -31,9 +31,13 @@ def split_train_test(df, cutoff_date) -> tuple:
     train_df = df[df['dia'] < cutoff_date]
     test_df = df[df['dia'] >= cutoff_date]
 
-    X_train = train_df.drop(columns=['temp_max_dia_seguinte', 'dia'])
+    # Toda coluna *_dia_seguinte vem de LEAD() na view, ou seja, é informação de amanhã.
+    # Só o target pode existir; o resto fora das features, senão o modelo vê o futuro.
+    colunas_futuras = [c for c in df.columns if c.endswith('_dia_seguinte')]
+
+    X_train = train_df.drop(columns=colunas_futuras + ['dia'])
     y_train = train_df['temp_max_dia_seguinte']
-    X_test = test_df.drop(columns=['temp_max_dia_seguinte', 'dia'])
+    X_test = test_df.drop(columns=colunas_futuras + ['dia'])
     y_test = test_df['temp_max_dia_seguinte']
 
     return X_train, X_test, y_train, y_test, test_df['dia']
